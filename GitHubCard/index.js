@@ -3,6 +3,17 @@
            https://api.github.com/users/<your name>
 */
 
+const cards = document.querySelector('.cards');
+axios.get('https://api.github.com/users/lawsonarichard')
+ .then(data => {
+   console.log('the data is here', data)
+   const userData = userBasics(data.data)
+   cards.appendChild(userData);
+   console.logo(userName);
+ })
+ .catch(err => {
+   console.log('Data is messed up')
+ });
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,8 +35,49 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
+function userBasics(userInfo) {
+  const card = document.createElement('div'),
+    userImage = document.createElement('img'),
+    cardInfo = document.createElement('div'),
+    userName = document.createElement('h3'),
+    usersuserName = document.createElement('p'),
+    usersLocation = document.createElement('p'),
+    usersProfile = document.createElement('p'),
+    usersProfileLink = document.createElement('a'),
+    usersFollowers = document.createElement('p'),
+    usersFollowing = document.createElement('p'),
+    usersBio = document.createElement('p');
 
+    card.appendChild(userImage);
+    card.appendChild(cardInfo);
+    cardInfo.appendChild(userName);
+    cardInfo.appendChild(usersuserName);
+    cardInfo.appendChild(usersLocation);
+    cardInfo.appendChild(usersProfile);
+    cardInfo.appendChild(usersFollowers);
+    cardInfo.appendChild(usersFollowing);
+    cardInfo.appendChild(usersProfileLink);
+    cardInfo.appendChild(usersBio);
+
+    card.classList.add('card');
+    cardInfo.classList.add('card-info');
+    userName.classList.add('name');
+    usersuserName.classList.add('username');    
+
+    userImage.src = userInfo.avatar_url;
+    userName.textContent = userInfo.name;
+    usersuserName.textContent = userInfo.login;
+    usersLocation.textContent = `Location: ${userInfo.location}`;
+    usersProfile.textContent = `Profile: ${usersProfileLink.href = userInfo.html_url}`;
+    usersFollowers.textContent = `Followers: ${userInfo.followers}`;
+    usersFollowing.textContent = `Following: ${userInfo.following}`;
+    usersBio.textContent = `Bio: ${userInfo.bio}`;
+
+    return card;
+
+
+}
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
